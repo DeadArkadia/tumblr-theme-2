@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+<head>
+    <link href="styles.css" rel="stylesheet" type="text/css"/>
+    
+	<meta charset="utf-8"/>
+	<meta name="{image:Background Image}" content="{HeaderImage}"/>
+	<meta name="{image:Background Color}" content="#234553"/>
+	<title>{Title}</title>
+	
+	<style>
+	    body {
+	        position: relative;
+	        align-content: center;
+	        font-family: Helvetica, Arial, "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", "sans-serif";
+        	overflow: auto;
+        	background-image: url("{image:Background Image}");
+        	background-size: cover;
+        	background-repeat: no-repeat;
+        	background-position: center;
+        	background-attachment: fixed;
+        	background-color: {BackgroundColor};
+        	word-wrap: break-word;
+	    }
+	    .transparent {
+	        background-color: rgba(0, 0, 0, 0.5);
+	        color: white;
+	    }
+	    
+	    #navbar {
+	        height: 66vh;
+	        position: fixed;
+	    }
+	    #post {
+	        height: auto;
+	        width: 33vw;
+	    }
+	</style>
+</head>
+	
+<body>
+	<div id="navbar" class="transparent">
+	    {block:ShowAvatar}
+	        <a href="{BlogURL}"><img src="{image:Large Avatar}"/></a>
+	    {/block:ShowAvatar}
+	</div>
+	<div id="postcontainer">
+	    {block:Posts}
+    		
+        		{block:Text}
+        		    <div id="post" class="transparent">
+        		        <h3>{Title}</h3>
+        		        <p>{Body}</p>
+        		    </div>
+        		{/block:Text}
+        		
+        		{block:Photo}
+        		    <div id="post" class="transparent">
+            		    <img src="{PhotoURL-500}"/>
+            		    {block:HighRes}
+            		        <a href="{PhotoURL-HighRes}">View in Higher Resolution</a>
+            		    {/block:HighRes}
+            		    {block:Caption}
+            		        <h3>{Caption}</h3>
+            		    {/block:Caption}
+        		    </div>
+        		{/block:Photo}
+        		
+        		{block:Panorama}
+        		    <div id="post" class="transparent">
+            		    <img src="{PhotoURL-Panorama}"/>
+            		    {block:Caption}
+            		        <h3>{Caption}</h3>
+            		    {/block:Caption}
+        		    </div>
+        		{/block:Panorama}
+        		
+        		{block:Photoset}
+        		    <div id="post" class="transparent">
+        		        {Photoset}
+            		    <p class="small">{PhotoCount}&nbsp;photos in album</p>
+            		    <h3>{Caption}</h3>
+        		    </div>
+        		{/block:Photoset}
+        		
+        		{block:Quote}
+        		    <div id="post" class="transparent">
+        		        <h3>{Quote}</h3>
+        		        {Source}
+        		    </div>
+        		{/block:Quote}
+        		
+        		{block:Link}
+        		    <div id="post" class="transparent">
+        		        <h4><a href="{URL}" {Target}>{Name}</a></h4>
+						{block:Description}
+							<p>{Description}</p>
+						{/block:Description}
+        		    </div>
+        		{/block:Link}
+        		
+        		{block:Chat}
+        		    <div id="post" class="transparent">
+        		        {block:Title}{Title}{/block:Title}
+							<table>
+								{block:Lines}
+								<tr>
+									<th>{block:Label}{Label}{/block:Label}</th>
+									<td>{Line}</td>
+								</tr>
+								{/block:Lines}
+							</table>
+        		    </div>
+        		{/block:Chat}
+        		
+        		{block:Audio}
+        		    <div id="post" class="transparent">
+        		    {AudioPlayeR}
+        		    {Caption}
+        		    </div>
+        		{/block:Audio}
+        		
+        		{block:Video}
+        		    <div id="post" class="transparent">
+        		    {Video-500}
+        		    {Caption}
+        		    </div>
+        		{/block:Video}
+		{/block:Posts}
+	</div>
+</body>
+	
+</html>
