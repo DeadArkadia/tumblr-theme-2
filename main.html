@@ -2,18 +2,36 @@
 <html>
 
 <head>
-    <link href="styles.css" rel="stylesheet" type="text/css"/>
-    
 	<meta charset="utf-8"/>
-	<meta name="{image:Background Image}" content="{HeaderImage}"/>
-	<meta name="{image:Background Color}" content="#234553"/>
+	
+	
+	<meta name="color:Body Text" content="white"/>
+	<meta name="color:Accents" content="#aaa"/>
+	
+	<meta name="color:Post Footer" content="#1e1e1e"/>
+	<meta name="color:Post Footer Text" content="gray"/>
+	<meta name="color:Gradient" content="#ff00ff"/>
+	<meta name="color:Link" content="#444"/>
+	<meta name="color:Visited Link" content="gray"/>
+	
+	<meta name="image:Background Image"/>
+	<meta name="image:Large Avatar" content="{PortraitURL-128}"/>
+	
+	<link rel="icon" href="{Favicon}">
+    <link href="https://fonts.googleapis.com/css?family=Signika|Archivo+Narrow" rel="stylesheet">
+	<link href="styles.css" rel="stylesheet" type="text/css">
+	
 	<title>{Title}</title>
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    
 	<style>
 	    body {
 	        position: relative;
 	        align-content: center;
-	        font-family: Helvetica, Arial, "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", "sans-serif";
+	        font-family: 'Signika', Helvetica, Arial, sans-serif;
         	overflow: auto;
         	background-image: url("{image:Background Image}");
         	background-size: cover;
@@ -22,113 +40,366 @@
         	background-attachment: fixed;
         	background-color: {BackgroundColor};
         	word-wrap: break-word;
+        	padding-top: 40px;
+	    }
+	    
+	    blockquote {
+        	border-left: 5px solid {color:Accents};
+            margin: 12px;
+            padding: 6px 12px;
+            width: auto;
+            height: auto;
+	    }
+	    h1, h2, h3, h4, h5, h6, p, a {
+	        margin: 0;
+	        padding: 0;
+	    }
+	    h1, h2, h3, h4 {
+	        font-style: italic;
+	        font-weight: bold;
+	    }
+	    a:link {
+	        text-decoration: none;
+	        color: {color:Link};
+	    }
+	    a:visited {
+	        color: {color:Visited Link};
 	    }
 	    .transparent {
 	        background-color: rgba(0, 0, 0, 0.5);
-	        color: white;
+	        
 	    }
-	    
+	    .small, a.small {
+	        font-size: 12px;
+	        color: gray;
+	        margin: 0;
+	    }
+	    #main {
+	        margin: auto;
+	        width: 75vw;
+	        min-width: 1024px;
+	    }
 	    #navbar {
-	        height: 66vh;
-	        position: fixed;
-	    }
-	    #post {
+	        display: inline-block;
+	        padding: 20px;
 	        height: auto;
-	        width: 33vw;
+	        overflow: hidden;
 	    }
+	    #avatar a, #avatar img {
+	        max-width: 100%;
+	        height: auto;
+	    }
+	    #avatar {
+	        padding-top: calc(25% - 20px);
+	        width: calc(25% - 20px);
+	        float: left;
+	        background-image: url('{image:Large Avatar}');
+	        background-size: 100%;
+	        background-repeat: no-repeat;
+	    }
+	    #info {
+	        width: calc(75% - 20px);
+	        float: right;
+	    }
+	    .content {
+	        margin: auto;
+	        height: auto;
+	        width: auto;
+	        padding: 10px;
+	        color: {color:Body Text};
+	    }
+	    .content img {
+	        width: 100%;
+	        height: auto;
+	    }
+	    #postcontainer {
+	        margin: auto;
+	        height: auto;
+	        width: 100%;
+	        max-width: 1200px;
+	    }
+		.postheader {
+			height: 20px;
+			width: auto;
+			background: linear-gradient(to right, rgba(0, 0, 0, 0), {color:Gradient});
+		}
+		.postheader p, .postfooter p, .postlikes {
+		    display: inline-block;
+		    font-size: 12px;
+		    margin: 2px 12px;
+		    text-transform: uppercase;
+		}
+		.postfooter ul {
+		    display: inline-block;
+		}
+		.postfooter {
+			height: 20px;
+			width: auto;
+			color: white;
+			background-color: {color:Post Footer};
+		}
+		.post, .post-sizer {
+		    opacity: 0;
+		    float: left;
+		    width: calc(50% - 20px);
+		    margin-bottom: 20px;
+		}
+		.post-wide {
+		    width: calc(100% - 60px);
+		}
+		.postid {
+		    float: left;
+		    color: {color:Post Footer Text};
+		}
+		.postdate {
+		    float: right;
+		}
+		.postlikes {
+		    height: 100%;
+		    width: auto;
+		    padding: 0 12px 0 0;
+		    margin: 0;
+		    float: right;
+		    list-style: none;
+		}
+		.postlikes li {
+		    float: right;
+		    margin: 0;
+		    padding-left: 12px;
+		    height: 20px;
+		    width: auto;
+		}
+		.postsource {
+		    float: left;
+		}
+		iframe {
+		    width: 100%;
+		}
+        .like-b {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            margin-bottom: -1px;
+        }
+        .like-b .like_button iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+            opacity: 0;
+        }
+        .like-b .liked + .b {
+            color: inherit;
+        }
+        .like-b .liked + .b:after {
+            content: 'd';
+        }
+
 	</style>
 </head>
 	
 <body>
-	<div id="navbar" class="transparent">
-	    {block:ShowAvatar}
-	        <a href="{BlogURL}"><img src="{image:Large Avatar}"/></a>
-	    {/block:ShowAvatar}
+    
+    
+    <div id="main">
+    	
+    	<div id="postcontainer">
+        	<div class="post-sizer"></div>
+        	<div id="navbar" class="post post-wide transparent">
+        	    {block:ShowAvatar}
+        	        <a id="avatar" href="{BlogURL}"></a>
+        	    {/block:ShowAvatar}
+        	    <div id="info" class="content">
+        	        <h2><a href="{BlogURL}">{Title}</a></h2>
+        	        <h3>{Description}</h3>    
+        	    </div>
+        	</div>
+    	    {block:Posts}
+    			    
+            		{block:Text}
+            		<div id="{PostID}" class="post transparent">
+                		<a href="{Permalink}"><div class="postheader">
+                		    <p class="postid">{PostID}</p>
+                		    <p class="postdate">{TimeAgo}</p>
+                		</div></a>
+            		    <div class="content">
+        					<h3>{Title}</h3>
+        					<p>{Body}</p>
+        				</div>
+        			    <div class="postfooter">
+        			        {block:RebloggedFrom}
+        			        <p class="postsource">Reblogged from <a href="{ReblogParentURL}">{ReblogParentName}</a> | <a href="{ReblogRootURL}">Source</a></p>
+        			        {/block:RebloggedFrom}
+        			        <ul class="postlikes">
+        			            <li><a class="like-b" href="#">{LikeButton}<span class="b">like</span></a></li>
+        			            <li><a href="{ReblogURL}" target="_blank">Reblog</a></li>
+        			            <li>{NoteCountWithLabel}</li>
+        			        </ul>
+        			    </div>
+    			    </div>
+            		{/block:Text}
+            		
+            		{block:Photo}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                	    	<div class="content">
+            					<img src="{PhotoURL-500}">
+            					{block:HighRes}
+            						<a class="small" href="{PhotoURL-HighRes}">View in Higher Resolution</a>
+            					{/block:HighRes}
+            					{block:Caption}
+            						<h3>{Caption}</h3>
+            					{/block:Caption}
+            				</div>
+        			    <div class="postfooter"></div>
+    			    </div>
+            		{/block:Photo}
+            		
+            		{block:Panorama}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                	    	<div class="content">
+            					<img src="{PhotoURL-Panorama}">
+            					{block:Caption}
+            						<h3>{Caption}</h3>
+            					{/block:Caption}
+            				</div>
+        			    <div class="postfooter"></div>
+    			    </div>
+            		{/block:Panorama}
+            		
+            		{block:Photoset}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                        	<div class="content">
+            					{block:Photos}
+            					    <img src="{PhotoURL-500}"/>
+            					{/block:Photos}
+            					<p class="small">{PhotoCount}&nbsp;photos in album</p>
+            					<h3>{Caption}</h3>
+            				</div>
+        		    	<div class="postfooter"></div>
+    		    	</div>
+            		{/block:Photoset}
+            		
+            		{block:Quote}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                    		<div class="content">
+            					<blockquote>{Quote}</blockquote>
+            					{Source}
+            				</div>
+        		    	<div class="postfooter"></div>
+    		    	</div>
+            		{/block:Quote}
+            		
+            		{block:Link}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                	    	<div class="content">
+            					<h3><a href="{URL}" {Target}>{Name}</a></h3>
+            					{block:Description}
+            						<p>{Description}</p>
+            					{/block:Description}
+            				</div>
+        		    	<div class="postfooter"></div>
+    		    	</div>
+            		{/block:Link}
+            		
+            		{block:Chat}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                	    	<div class="content">
+            					{block:Title}{Title}{/block:Title}
+            					<table>
+            						{block:Lines}
+            						<tr>
+            							<th>{block:Label}{Label}{/block:Label}</th>
+            							<td>{Line}</td>
+            						</tr>
+            						{/block:Lines}
+            					</table>
+            				</div>
+        	    		<div class="postfooter"></div>
+    	    		</div>
+            		{/block:Chat}
+            		
+            		{block:Audio}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                	    	<div class="content">
+                	    	    {block:AudioEmbed}
+                	    	        {AudioEmbed}
+                	    	    {/block:AudioEmbed}
+                	    	    {block:AudioPlayer}
+                    		        {AudioPlayer}
+                    		    {/block:AudioPlayer}
+                    		    {Caption}
+                    		</div>
+        		    	<div class="postfooter"></div>
+    		    	</div>
+            		{/block:Audio}
+            		
+            		{block:Video}
+            		<div id="{PostID}" class="post transparent">
+                		<div class="postheader"></div>
+                		    <div class="content">
+                    		    {VideoEmbed-500}
+                    		    {Caption}
+                		    </div>
+        		    	<div class="postfooter"></div>
+    		    	</div>
+            		{/block:Video}
+    			
+    		{/block:Posts}
+    	</div>
 	</div>
-	<div id="postcontainer">
-	    {block:Posts}
-    		
-        		{block:Text}
-        		    <div id="post" class="transparent">
-        		        <h3>{Title}</h3>
-        		        <p>{Body}</p>
-        		    </div>
-        		{/block:Text}
-        		
-        		{block:Photo}
-        		    <div id="post" class="transparent">
-            		    <img src="{PhotoURL-500}"/>
-            		    {block:HighRes}
-            		        <a href="{PhotoURL-HighRes}">View in Higher Resolution</a>
-            		    {/block:HighRes}
-            		    {block:Caption}
-            		        <h3>{Caption}</h3>
-            		    {/block:Caption}
-        		    </div>
-        		{/block:Photo}
-        		
-        		{block:Panorama}
-        		    <div id="post" class="transparent">
-            		    <img src="{PhotoURL-Panorama}"/>
-            		    {block:Caption}
-            		        <h3>{Caption}</h3>
-            		    {/block:Caption}
-        		    </div>
-        		{/block:Panorama}
-        		
-        		{block:Photoset}
-        		    <div id="post" class="transparent">
-        		        {Photoset}
-            		    <p class="small">{PhotoCount}&nbsp;photos in album</p>
-            		    <h3>{Caption}</h3>
-        		    </div>
-        		{/block:Photoset}
-        		
-        		{block:Quote}
-        		    <div id="post" class="transparent">
-        		        <h3>{Quote}</h3>
-        		        {Source}
-        		    </div>
-        		{/block:Quote}
-        		
-        		{block:Link}
-        		    <div id="post" class="transparent">
-        		        <h4><a href="{URL}" {Target}>{Name}</a></h4>
-						{block:Description}
-							<p>{Description}</p>
-						{/block:Description}
-        		    </div>
-        		{/block:Link}
-        		
-        		{block:Chat}
-        		    <div id="post" class="transparent">
-        		        {block:Title}{Title}{/block:Title}
-							<table>
-								{block:Lines}
-								<tr>
-									<th>{block:Label}{Label}{/block:Label}</th>
-									<td>{Line}</td>
-								</tr>
-								{/block:Lines}
-							</table>
-        		    </div>
-        		{/block:Chat}
-        		
-        		{block:Audio}
-        		    <div id="post" class="transparent">
-        		    {AudioPlayeR}
-        		    {Caption}
-        		    </div>
-        		{/block:Audio}
-        		
-        		{block:Video}
-        		    <div id="post" class="transparent">
-        		    {Video-500}
-        		    {Caption}
-        		    </div>
-        		{/block:Video}
-		{/block:Posts}
-	</div>
+	<script>
+	    var $posts = $('.post');
+	    var $grid = $('#postcontainer').imagesLoaded( function() {
+	        console.log('fuck you');
+	        $grid.masonry( 'stamp', '#navbar');
+            $grid.masonry({
+                itemSelector: '.post',
+                columnWidth: '.post-sizer',
+                percentPosition: true,
+                gutter: 20
+            });
+        });
+        $grid.one( 'layoutComplete', function() {
+            $posts.fadeTo("slow", 1, "swing");    
+        });
+        $('iframe').contents().find('path').attr('fill', '#ffffff');
+        /*
+        $grid.one( 'layoutComplete', function() {
+            $posts.fadeIn();
+        })
+        */
+        /*
+        $grid.imagesLoaded().always( function() {
+            
+            $grid.masonry('layout');
+            console.log('fek');
+        });
+        */
+        
+        /*
+        // init Masonry
+        var $grid = new Masonry( elem, {
+          // options
+          itemSelector: '.post',
+          columnWidth: '.post-sizer',
+          percentPosition: true,
+          gutter: 20
+        });
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress( function() {
+            $grid.masonry('layout');
+        });
+        */
+	</script>
 </body>
 	
 </html>

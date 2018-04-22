@@ -1,0 +1,4 @@
+
+2018.04.22
+	Make header 'post' fullwidth, move navigation to sticky header
+	Make post header change contextual date to actual date on hover

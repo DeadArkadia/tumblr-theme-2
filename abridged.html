@@ -1,0 +1,495 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8"/>
+	<meta name="color:Body Text" content="white"/>
+    <meta name="color:Header Text" content="black"/>
+	<meta name="color:Accents" content="#aaa"/>
+	
+	<meta name="color:Gradient" content="#ff00ff"/>
+	
+	<meta name="image:Background Image"/>
+	<meta name="image:Large Avatar" content="{PortraitURL-128}"/>
+	
+	<link rel="icon" href="{Favicon}">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono|Signika|Fjalla+One" rel="stylesheet">
+	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+    <link href="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.gallery.min.css" type="text/css" rel="stylesheet" />
+	<title>{Title}</title>
+	
+	
+    
+	<style>
+	    body {
+	        position: relative;
+	        align-content: center;
+	        font-family: 'Signika', Helvetica, Arial, sans-serif;
+        	overflow-x: visible;
+        	overflow-y: auto;
+        	background-image: url("{image:Background Image}");
+        	background-size: cover;
+        	background-repeat: no-repeat;
+        	background-position: center;
+        	background-attachment: fixed;
+        	background-color: {BackgroundColor};
+        	word-wrap: break-word;
+        	padding-top: 40px;
+	    }
+	    
+	    blockquote, .chat {
+        	border-left: 5px solid {color:Accents};
+            margin: 12px;
+            padding: 6px 12px;
+            width: auto;
+            height: auto;
+	    }
+	    .chat {
+	        font-family: 'Ubuntu Mono', monospace;
+	    }
+	    h1, h2, h3, h4, h5, h6, p, a {
+	        margin: 0;
+	        padding: 0;
+	    }
+	    h1, h2 {
+	        font-style: italic;
+	        font-weight: bold;
+	    }
+	    a:link {
+	        text-decoration: none;
+	        color: {color:Body Text};
+	    }
+	    a:visited {
+	        color: {color:Body Text};
+	    }
+	    .stamp {
+	        position: absolute;
+	        top: 5vh;
+	        
+	    }
+	    .small:hover {
+	        opacity: 1;
+	    }
+	    .transparent {
+	        background-color: rgba(0, 0, 0, 0.5);
+	        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+	    }
+	    .small, a.small {
+	        font-size: 12px;
+	        color: {color:Body Text};
+	        opacity: 0.5;
+	        margin: 0;
+	        transition: all 0.2s ease;
+	    }
+	    #header {
+	        width: calc(100% - 20px);
+	        display: flex;
+	        height: auto;
+	    }
+	    #profile, #navbar {
+	        padding: 20px;
+	        overflow: hidden;
+	    }
+	    #profile {
+	        width: calc(75% - 50px);
+	        background-image: url('{HeaderImage}');
+	    }
+	    #profile a, #profile p {
+	        color: {color:Header Text};
+	    }
+	    #navbar {
+	        width: calc(25% - 50px);
+	        margin-right: 20px;
+	    }
+	    #avatar a, #avatar img {
+	        width: auto;
+	        height: auto;
+	    }
+	    #avatar {
+	        padding-top: calc(25% - 20px);
+	        width: calc(25% - 20px);
+	        float: left;
+	        background-image: url('{image:Large Avatar}');
+	        background-size: 100%;
+	        background-repeat: no-repeat;
+	    }
+	    #info {
+	        width: calc(75% - 20px);
+	        float: right;
+	    }
+	    .content {
+	        margin: auto;
+	        height: auto;
+	        width: auto;
+	        padding: 10px;
+	        color: {color:Body Text};
+	    }
+	    .content img {
+	        width: 100%;
+	        height: auto;
+	    }
+	    #postcontainer {
+	        margin: auto;
+	        height: auto;
+	        width: 66vw;
+	    }
+		.postheader {
+			height: 20px;
+			width: auto;
+			background: linear-gradient(to right, rgba(0, 0, 0, 0), {color:Gradient});
+			transition: all 0.4s ease-in;
+		}
+		.postheader p, .postfooter p, .postlikes {
+		    display: inline-block;
+		    font-family: 'Fjalla One', 'sans-serif';
+		    font-size: 12px;
+		    letter-spacing: 0.4px;
+		    margin: 2px 12px;
+		    text-transform: uppercase;
+		}
+		.postfooter ul {
+		    display: inline-block;
+		}
+		.postheader:hover {
+	        text-decoration: none;
+	        color: {color:Body Text};
+	        filter: invert(100%);
+	    }
+		.postfooter:not(a) {
+			height: 20px;
+			width: auto;
+			color: white;
+			background-color: #1e1e1e;
+		}
+		.post, .post-sizer {
+		    opacity: 0;
+		    float: left;
+		    width: calc(50% - 20px);
+		    margin-bottom: 20px;
+		}
+		.post-wide {
+		    width: 100%;
+		}
+		.postid {
+		    float: left;
+		    color: {color:Body Text};
+		    opacity: 0.5;
+		}
+		.postdate {
+		    float: right;
+		}
+		.postlikes {
+		    height: 100%;
+		    width: auto;
+		    padding: 0 12px 0 0;
+		    margin: 0;
+		    float: right;
+		    list-style: none;
+		}
+		.postlikes li {
+		    float: right;
+		    margin: 0;
+		    padding-left: 12px;
+		    height: 20px;
+		    width: auto;
+		}
+		p.postsource {
+		    float: left;
+		}
+		iframe {
+		    width: 100%;
+		}
+        .like-b {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            margin-bottom: -1px;
+        }
+        .like-b .like_button iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+            opacity: 0;
+        }
+        .like-b.liked + .b {
+            color: inherit;
+        }
+        .like-b.liked + .b:after {
+            content: 'd';
+        }
+        .id {
+            line-height: 40px;
+            height: 40px;
+        }
+        
+        .id div, .id h3 {
+            vertical-align: middle;
+            padding: 0px 12px;
+            display: inline-block;
+            transition: all 0.5s ease;
+        }
+        .id h3:hover {
+            text-transform: uppercase;
+        }
+        .id img {
+            width: auto;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+        blockquote.question {
+            font-family: 'Ubuntu Mono', monospace;
+            background-color: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .posttags {
+            padding-left: 12px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .notes {
+            display: inline-block;
+            list-style-type: none;
+        }
+        .note {
+            padding: 1px 0px;
+        }
+        .note .avatar_frame {
+            margin-right: 8px;
+        }
+        .note blockquote {
+            padding: 3px 12px;
+            margin: 3px 12px;
+        }
+        .action {
+            color: {color:Body Text};
+            margin: 0px, 5px;
+        }
+        .lightbox-custom {
+            box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.5);
+        }
+	</style>
+</head>
+	
+<body>
+	<div id="postcontainer">
+    	<div class="post-sizer"></div>
+    	<div id="header" class="post post-wide stamp">
+    	
+        	<div id="navbar" class="transparent">
+        	    <ul>
+            	    {block:AskEnabled}
+            	        <li><a href="/ask">{AskLabel}</a></li>
+            	    {/block:AskEnabled}
+            	    {block:Pages}
+            	        <li><a href="{URL}">{Label}</a></li>
+            	    {/block:Pages}
+            	        <li><a href="/archive">Archive</a></li>
+        	    </ul>
+        	</div>
+        	<div id="profile" class="transparent">
+        	    {block:ShowAvatar}
+        	        <a id="avatar" href="{BlogURL}"></a>
+        	    {/block:ShowAvatar}
+        	    <div id="info" class="content">
+        	        <h1><a href="{BlogURL}">{Title}</a></h1>
+        	        <p>{Description}</p>    
+        	    </div>
+        	</div>
+    	</div>
+	    {block:Posts}
+			<div id="{PostID}" class="post transparent">
+				<a href="{Permalink}"><div class="postheader">
+					<p class="postid">{PostID}</p>
+					<p class="postdate">{TimeAgo}</p>
+				</div></a>	    
+        		{block:Text}
+        		    <div class="content">
+    					<h3>{Title}</h3>
+    					<p>{Body}</p>
+    				</div>
+    			{/block:Text}
+        		
+        		{block:Photo}
+					<div class="content">
+						<a href="{PhotoURL-HighRes}" data-featherlight="image"><img src="{PhotoURL-500}"></a>
+						{block:Caption}
+							<h3>{Caption}</h3>
+						{/block:Caption}
+					</div>
+        		{/block:Photo}
+        		
+        		{block:Panorama}
+					<div class="content">
+						<a href="{PhotoURL-Panorama}" data-featherlight="image"><img src="{PhotoURL-500}"></a>
+						{block:Caption}
+							<h3>{Caption}</h3>
+						{/block:Caption}
+					</div>
+        		{/block:Panorama}
+        		
+        		{block:Photoset}
+					<div class="content">
+					    <section data-featherlight-gallery data-featherlight-filter="a">
+						{block:Photos}
+							<a href="{PhotoURL-HighRes}"><img src="{PhotoURL-500}"></a>
+						{/block:Photos}
+						</section>
+						<p class="small">{PhotoCount}&nbsp;photos in album</p>
+						<h3>{Caption}</h3>
+					</div>
+				{/block:Photoset}
+        		
+        		{block:Quote}
+					<div class="content">
+						<blockquote>{Quote}</blockquote>
+						{Source}
+					</div>
+        		{/block:Quote}
+        		
+        		{block:Link}
+					<div class="content">
+						<h3><a href="{URL}" {Target}>{Name}</a></h3>
+						{block:Description}
+							<p>{Description}</p>
+						{/block:Description}
+					</div>
+        		{/block:Link}
+        		
+        		{block:Chat}
+					<div class="content">
+						{block:Title}{Title}{/block:Title}
+						<table class="chat">
+							{block:Lines}
+							<tr>
+								<th style="vertical-align: top">{block:Label}{Label}{/block:Label}</th>
+								<td>{Line}</td>
+							</tr>
+							{/block:Lines}
+						</table>
+					</div>
+        		{/block:Chat}
+        		
+        		{block:Audio}
+					<div class="content">
+						{block:AudioEmbed}
+							{AudioEmbed}
+						{/block:AudioEmbed}
+						{block:AudioPlayer}
+							{AudioPlayer}
+						{/block:AudioPlayer}
+						{Caption}
+					</div>
+        		{/block:Audio}
+				
+    			{block:Answer}
+					<div class="content" style="display: block">
+						<div class="id">
+							<img src="{AskerPortraitURL-40}" width="40" height="40">
+							<h3>{Asker}:</h3>
+						</div>
+						<blockquote class="question">{Question}</blockquote>
+						{block:Answerer}
+							<div class="id">
+								<img src="{AnswererPortraitURL-40}" width="40" height="40">
+								<h3>{Answerer}:</h3>
+							</div>
+							<blockquote class="answer">{Answer}</blockquote>
+						{/block:Answerer}
+						<p>{Replies}</p>
+					</div>
+				{/block:Answer}
+				
+        		{block:Video}
+					<div class="content">
+						{VideoEmbed-500}
+						{Caption}
+					</div>
+        		{/block:Video}
+        		{block:HasTags}
+        		<div class="posttags small">
+        		    <ul>
+        		        {block:Tags}
+        		        <li style="display: inline"><a href="{TagURL}">#{Tag}</a></li>
+        		        {/block:Tags}
+        		    </ul>
+        		</div>
+        		{/block:HasTags}
+        		
+        		{block:PermalinkPage}
+        		    {PostNotes-16}
+        		{/block:PermalinkPage}
+				<div class="postfooter">
+					{block:RebloggedFrom}
+					<p class="postsource">Reblogged via <a href="{ReblogParentURL}">{ReblogParentName}</a> | <a href="{ReblogRootURL}">Source</a></p>
+					{/block:RebloggedFrom}
+					{block:HomePage}
+					<ul class="postlikes">
+						<li><a class="like-b" href="#">{LikeButton}<span class="b">like</span></a></li>
+						<li><a href="{ReblogURL}" target="_blank">Reblog</a></li>
+						<li><a href="{Permalink}">{NoteCountWithLabel}</a></li>
+					</ul>
+					{/block:HomePage}
+				</div>
+			</div>
+		{/block:Posts}
+	</div>
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+	<script>
+	    // featherlight
+	    $.featherlight.defaults.openSpeed = 0;
+	    $.featherlight.defaults.closeSpeed = 0;
+	    $.featherlight.defaults.variant = 'lightbox-custom';
+	    // masonry
+	    var $posts = $('.post');
+	    var $grid = $('#postcontainer').imagesLoaded( function() {
+	        $grid.masonry( 'stamp', '.stamp');
+            $grid.masonry({
+                itemSelector: '.post',
+                columnWidth: '.post-sizer',
+                percentPosition: true,
+                gutter: 20
+            });
+        });
+        $grid.one( 'layoutComplete', function() {
+            $posts.fadeTo("slow", 1, "swing");    
+        });
+        /*
+        $grid.one( 'layoutComplete', function() {
+            $posts.fadeIn();
+        })
+        */
+        /*
+        $grid.imagesLoaded().always( function() {
+            
+            $grid.masonry('layout');
+            console.log('fek');
+        });
+        */
+        
+        /*
+        // init Masonry
+        var $grid = new Masonry( elem, {
+          // options
+          itemSelector: '.post',
+          columnWidth: '.post-sizer',
+          percentPosition: true,
+          gutter: 20
+        });
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress( function() {
+            $grid.masonry('layout');
+        });
+        */
+	</script>
+</body>
+	
+</html>
